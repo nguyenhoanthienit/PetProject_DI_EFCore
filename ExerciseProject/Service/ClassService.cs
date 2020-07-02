@@ -9,14 +9,15 @@ namespace ExerciseProject.Service
 {
     public class ClassService : IClassService
     {
-        IRepository<Student> _studentRepo;
-        public ClassService(IRepository<Student> studentRepo)
+        private readonly IStudentRepository _studentRepository;
+        public ClassService(IStudentRepository studentRepository)
         {
-            _studentRepo = studentRepo;
+            this._studentRepository = studentRepository;
         }
         public IQueryable<Student> GetStudentsByClass(int classId)
         {
-            var listStudent = _studentRepo.SelectAll().Where(s => s.ClassId == classId);
+            
+            var listStudent = _studentRepository.SelectAll().Where(s => s.ClassId == classId);
             return listStudent;
         }
     }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ExerciseProject.Repository
 {
-    public interface IRepository<T> where T : class
+    public interface IRepositoryBase<T> where T : class
     {
         IQueryable<T> SelectAll();
         T SelectById(object id);

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ExerciseProject.Repository
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        public AppDbContext Model { get; set; }
-        public Repository(AppDbContext model)
+        public AppDbContext AppDbContext { get; set; }
+        public RepositoryBase(AppDbContext appDbContext)
         {
-            this.Model = model;
+            this.AppDbContext = appDbContext;
         }
 
         public void Delete(object id)
@@ -31,7 +31,7 @@ namespace ExerciseProject.Repository
 
         public IQueryable<T> SelectAll()
         {
-            return this.Model.Set<T>();
+            return this.AppDbContext.Set<T>();
         }
 
         public T SelectById(object id)
