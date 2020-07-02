@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace ExerciseProject.Repository
 {
-    public interface IStudentRepository : IRepositoryBase<Student>
+    public class ClassRepository : RepositoryBase<Class>, IClassRepository
     {
-        Schedule GetSchedule(int id);
+        public ClassRepository(AppDbContext appDbContext) : base(appDbContext)
+        {
+
+        }
     }
 }

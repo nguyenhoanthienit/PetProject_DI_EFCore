@@ -16,7 +16,6 @@ namespace ExerciseProject.Service
         }
         public IQueryable<Student> GetStudentsByClass(int classId)
         {
-            
             var listStudent = _studentRepository.SelectAll().Where(s => s.ClassId == classId);
             return listStudent;
         }
