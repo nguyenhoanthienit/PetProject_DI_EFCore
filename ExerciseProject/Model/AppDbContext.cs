@@ -16,6 +16,12 @@ namespace ExerciseProject.Repository
         public DbSet<Class> Classes { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Schedule>().HasKey(table => new {
+                table.SubjectId,
+                table.ClassId
+            });
+        }
     }
 }
