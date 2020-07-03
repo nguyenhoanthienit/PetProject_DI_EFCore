@@ -17,6 +17,8 @@ namespace ExerciseProject
             Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
             .WriteTo.File("logs\\log-.txt", rollingInterval: RollingInterval.Day)
+            .WriteTo.Seq("http://192.168.1.200:5341/#/events",
+                 apiKey: "cq1yUQGgrvyVKBJfnS9o")
             .CreateLogger();
 
             CreateHostBuilder(args).Build().Run();
