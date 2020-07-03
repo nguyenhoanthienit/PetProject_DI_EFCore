@@ -13,6 +13,11 @@ namespace ExerciseProject.Repository
 
         }
 
+        public Class GetClass(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Schedule GetSchedule(int id)
         {
             throw new NotImplementedException();
