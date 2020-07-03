@@ -29,7 +29,7 @@ namespace ExerciseProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<AppDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("ServerConnection")));
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<ISubjectService, SubjectService>();
 
