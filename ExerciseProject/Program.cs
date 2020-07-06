@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Core;
 
 namespace ExerciseProject
 {
@@ -14,12 +16,9 @@ namespace ExerciseProject
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-            .WriteTo.Console()
-            .WriteTo.File("logs\\log-.txt", rollingInterval: RollingInterval.Day)
-            .WriteTo.Seq("http://192.168.1.200:5341/#/events",
-                 apiKey: "cq1yUQGgrvyVKBJfnS9o")
-            .CreateLogger();
+            var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
 
             CreateHostBuilder(args).Build().Run();
         }
