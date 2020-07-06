@@ -18,9 +18,24 @@ namespace ExerciseProject.Repository
         public DbSet<Subject> Subjects { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Schedule>().HasKey(table => new {
-                table.SubjectId,
-                table.ClassId
+            builder.Entity<Schedule>(entity =>
+            {
+                entity.HasKey(e => new { e.ClassId, e.SubjectId });
+            });
+
+            builder.Entity<Class>(entity =>
+            {
+                entity.HasKey(e => new { e.Id });
+            });
+
+            builder.Entity<Student>(entity =>
+            {
+                entity.HasKey(e => new { e.Id });
+            });
+
+            builder.Entity<Subject>(entity =>
+            {
+                entity.HasKey(e => new { e.Id });
             });
         }
     }

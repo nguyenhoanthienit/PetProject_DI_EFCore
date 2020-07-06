@@ -25,7 +25,7 @@ namespace ExerciseProject.Service
                               join c in _scheduleRepository.SelectAll()
                               on u.Id equals c.SubjectId
                               join s in _studentRepository.SelectAll()
-                              on c.ClassId equals s.ClassId
+                              on c.ClassId equals s.Class.Id
                               where s.Id == studentId
                               select u).Distinct();
             return listSubject;
