@@ -1,4 +1,5 @@
-﻿using ExerciseProject.Model;
+﻿using ExerciseProject.DTO;
+using ExerciseProject.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace ExerciseProject.Service
 {
     public interface ISubjectService
     {
-        IQueryable<Subject> GetSubjectsByStudent(int studentId);
+        IQueryable<SubjectDTO> GetSubjectsByStudent(int studentId);
     }
 }

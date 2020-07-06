@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ExerciseProject.Model;
 using ExerciseProject.Repository;
 using ExerciseProject.Service;
+using ExerciseProject.DTO;
 
 namespace ExerciseProject.Controllers
 {
@@ -24,7 +25,7 @@ namespace ExerciseProject.Controllers
 
         // GET: api/classes/1
         [HttpGet("{id}")]
-        public IEnumerable<Student> GetStudentsByClass(int id)
+        public IEnumerable<StudentDTO> GetStudentsByClass(int id)
         {
             return _classService.GetStudentsByClass(id);
         }
