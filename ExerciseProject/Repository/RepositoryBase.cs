@@ -11,37 +11,44 @@ namespace ExerciseProject.Repository
         public AppDbContext AppDbContext { get; set; }
         public RepositoryBase(AppDbContext appDbContext)
         {
-            this.AppDbContext = appDbContext;
+            AppDbContext = appDbContext;
         }
 
-        public void Delete(object id)
+        public T Delete(object id)
         {
-            throw new NotImplementedException();
+            var entity = AppDbContext.Set<T>().Find(id);
+            if (entity == null)
+            {
+                return entity;
+            }
+            AppDbContext.Set<T>().Remove(entity);
+            AppDbContext.SaveChanges();
+            return entity;
         }
 
-        public void Insert(T item)
+        public T Insert(T item)
         {
-            throw new NotImplementedException();
+            AppDbContext.Set<T>().Add(item);
+            AppDbContext.SaveChanges();
+            return item;
         }
 
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
 
         public IQueryable<T> SelectAll()
         {
-            return this.AppDbContext.Set<T>();
+            return AppDbContext.Set<T>();
         }
 
         public T SelectById(object id)
         {
-            throw new NotImplementedException();
+            return AppDbContext.Set<T>().Find(id);
         }
 
-        public void Update(T item)
+        public T Update(T item)
         {
-            throw new NotImplementedException();
+            AppDbContext.Entry(item).State = EntityState.Modified;
+            AppDbContext.SaveChanges();
+            return item;
         }
     }
 }

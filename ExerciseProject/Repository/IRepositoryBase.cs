@@ -9,9 +9,8 @@ namespace ExerciseProject.Repository
     {
         IQueryable<T> SelectAll();
         T SelectById(object id);
-        void Insert(T item);
-        void Update(T item);
-        void Delete(object id);
-        void Save();
+        T Insert(T item);
+        T Update(T item);
+        T Delete(object id);
     }
 }
