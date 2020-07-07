@@ -18,29 +18,6 @@ CREATE TABLE [Classes] (
 
 GO
 
-CREATE TABLE [Schedules] (
-    [SubjectId] int NOT NULL,
-    [ClassId] int NOT NULL,
-    [DayOfWeek] int NOT NULL,
-    [Name] nvarchar(max) NULL,
-    [Active] bit NOT NULL,
-    CONSTRAINT [PK_Schedules] PRIMARY KEY ([SubjectId], [ClassId])
-);
-
-GO
-
-CREATE TABLE [Students] (
-    [Id] int NOT NULL IDENTITY,
-    [FirstName] nvarchar(max) NULL,
-    [LastName] nvarchar(max) NULL,
-    [DateOfBirth] nvarchar(max) NULL,
-    [ClassId] int NOT NULL,
-    [Active] bit NOT NULL,
-    CONSTRAINT [PK_Students] PRIMARY KEY ([Id])
-);
-
-GO
-
 CREATE TABLE [Subjects] (
     [Id] int NOT NULL IDENTITY,
     [Name] nvarchar(max) NULL,
@@ -50,7 +27,41 @@ CREATE TABLE [Subjects] (
 
 GO
 
+CREATE TABLE [Students] (
+    [Id] int NOT NULL IDENTITY,
+    [FirstName] nvarchar(max) NULL,
+    [LastName] nvarchar(max) NULL,
+    [ClassId] int NULL,
+    [DateOfBirth] nvarchar(max) NULL,
+    [Active] bit NOT NULL,
+    CONSTRAINT [PK_Students] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Students_Classes_ClassId] FOREIGN KEY ([ClassId]) REFERENCES [Classes] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Schedules] (
+    [SubjectId] int NOT NULL,
+    [ClassId] int NOT NULL,
+    [DayOfWeek] int NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Active] bit NOT NULL,
+    CONSTRAINT [PK_Schedules] PRIMARY KEY ([ClassId], [SubjectId]),
+    CONSTRAINT [FK_Schedules_Classes_ClassId] FOREIGN KEY ([ClassId]) REFERENCES [Classes] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Schedules_Subjects_SubjectId] FOREIGN KEY ([SubjectId]) REFERENCES [Subjects] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE INDEX [IX_Schedules_SubjectId] ON [Schedules] ([SubjectId]);
+
+GO
+
+CREATE INDEX [IX_Students_ClassId] ON [Students] ([ClassId]);
+
+GO
+
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20200703040705_InitialCreate', N'3.1.5');
+VALUES (N'20200706041400_initialcreate', N'3.1.5');
 
 GO
