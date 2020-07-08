@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace ExerciseProject
 {
@@ -32,12 +33,23 @@ namespace ExerciseProject
         {
             services.AddControllers();
 
+            services.AddSwaggerGen(c => 
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "My First API",
+                    Description = "My Small Excercise"
+                });
+            });
+
             services.AddDbContext<AppDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("ServerConnection")));
 
             services.AddAutoMapper(typeof(Startup).Assembly);
             
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<ISubjectService, SubjectService>();
+            services.AddScoped<IStudentService, StudentService>();
 
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ISubjectRepository, SubjectRepository>();
@@ -51,6 +63,12 @@ namespace ExerciseProject
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+            });
 
             app.UseHttpsRedirection();
 

@@ -21,6 +21,12 @@ namespace ExerciseProject.Repository
             builder.Entity<Schedule>(entity =>
             {
                 entity.HasKey(e => new { e.ClassId, e.SubjectId });
+                
+                entity.HasOne(e => e.Class)
+                .WithMany(e => e.Schedules);
+
+                entity.HasOne(e => e.Subject)
+                .WithMany(e => e.Schedules);
             });
 
             builder.Entity<Class>(entity =>
@@ -31,6 +37,8 @@ namespace ExerciseProject.Repository
             builder.Entity<Student>(entity =>
             {
                 entity.HasKey(e => new { e.Id });
+                entity.HasOne(e => e.Class)
+                .WithMany(e => e.Students);
             });
 
             builder.Entity<Subject>(entity =>
