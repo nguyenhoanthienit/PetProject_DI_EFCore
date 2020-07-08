@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ExerciseProject.DTO;
+using ExerciseProject.Middleware;
 using ExerciseProject.Repository;
 using ExerciseProject.Service;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace ExerciseProject
 {
@@ -33,6 +35,18 @@ namespace ExerciseProject
         {
             services.AddControllers();
 
+            services.AddDbContext<AppDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("ServerConnection")));
+
+            services.AddAutoMapper(typeof(Startup).Assembly);
+
+            services.AddScoped<IClassService, ClassService>();
+            services.AddScoped<ISubjectService, SubjectService>();
+            services.AddScoped<IStudentService, StudentService>();
+
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ISubjectRepository, SubjectRepository>();
+            services.AddScoped<IScheduleRepository, ScheduleRepository>(); 
+            
             services.AddSwaggerGen(c => 
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -42,18 +56,6 @@ namespace ExerciseProject
                     Description = "My Small Excercise"
                 });
             });
-
-            services.AddDbContext<AppDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("ServerConnection")));
-
-            services.AddAutoMapper(typeof(Startup).Assembly);
-            
-            services.AddScoped<IClassService, ClassService>();
-            services.AddScoped<ISubjectService, SubjectService>();
-            services.AddScoped<IStudentService, StudentService>();
-
-            services.AddScoped<IStudentRepository, StudentRepository>();
-            services.AddScoped<ISubjectRepository, SubjectRepository>();
-            services.AddScoped<IScheduleRepository, ScheduleRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +65,8 @@ namespace ExerciseProject
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<SerilogMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -79,7 +83,7 @@ namespace ExerciseProject
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            });  
         }
     }
 }

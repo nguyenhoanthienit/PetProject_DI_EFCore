@@ -20,7 +20,7 @@
     "ExerciseProject": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/subjects/1",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
