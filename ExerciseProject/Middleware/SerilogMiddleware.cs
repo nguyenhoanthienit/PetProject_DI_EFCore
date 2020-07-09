@@ -31,13 +31,13 @@ namespace ExerciseProject.Middleware
 
             var start = Stopwatch.GetTimestamp();
             httpContext.Response.Headers.Add("correlation-id", Guid.NewGuid().ToString());
-            await _next(httpContext);
             var elapsedMs = GetElapsedMilliseconds(start, Stopwatch.GetTimestamp());
             var statusCode = httpContext.Response?.StatusCode;
             var level = statusCode > 499 ? LogEventLevel.Error : LogEventLevel.Information;
 
             LogContext.PushProperty("CorrelationId", Guid.NewGuid().ToString());
             Log.Write(level, MessageTemplate, httpContext.Request.Method, GetPath(httpContext), statusCode, elapsedMs);
+            await _next(httpContext);
         }
 
         static double GetElapsedMilliseconds(long start, long stop)
