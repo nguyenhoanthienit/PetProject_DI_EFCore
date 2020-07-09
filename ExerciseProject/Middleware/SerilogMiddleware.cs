@@ -30,7 +30,6 @@ namespace ExerciseProject.Middleware
             }
 
             var start = Stopwatch.GetTimestamp();
-            httpContext.Response.Headers.Add("correlation-id", Guid.NewGuid().ToString());
             var elapsedMs = GetElapsedMilliseconds(start, Stopwatch.GetTimestamp());
             var statusCode = httpContext.Response?.StatusCode;
             var level = statusCode > 499 ? LogEventLevel.Error : LogEventLevel.Information;
