@@ -34,7 +34,9 @@ namespace ExerciseProject.Middleware
             var statusCode = httpContext.Response?.StatusCode;
             var level = statusCode > 499 ? LogEventLevel.Error : LogEventLevel.Information;
 
-            LogContext.PushProperty("CorrelationId", Guid.NewGuid().ToString());
+            var correlationId = Guid.NewGuid().ToString();
+            LogContext.PushProperty("CorrelationId", correlationId);
+            httpContext.Response.Headers.Add("CorrelationId", correlationId);
             Log.Write(level, MessageTemplate, httpContext.Request.Method, GetPath(httpContext), statusCode, elapsedMs);
             await _next(httpContext);
         }

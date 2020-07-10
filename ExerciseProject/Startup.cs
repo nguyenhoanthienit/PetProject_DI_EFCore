@@ -42,6 +42,7 @@ namespace ExerciseProject
             services.AddScoped<IClassService, ClassService>();
             services.AddScoped<ISubjectService, SubjectService>();
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IScheduleService, ScheduleService>();
 
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<ISubjectRepository, SubjectRepository>();

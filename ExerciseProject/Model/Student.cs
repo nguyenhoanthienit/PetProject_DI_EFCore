@@ -11,7 +11,7 @@ namespace ExerciseProject.Model
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Class Class { get; set; }
+        public virtual Class Class { get; set; }
         public string DateOfBirth { get; set; }
         public bool Active { get; set; }
     }
