@@ -22,7 +22,7 @@ namespace ExerciseProject.Middleware
             _next = next ?? throw new ArgumentNullException(nameof(next));
         }
 
-        public async Task Invoke(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext httpContext)
         {
             if (httpContext == null)
             {

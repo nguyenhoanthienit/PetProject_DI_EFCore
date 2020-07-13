@@ -67,6 +67,7 @@ namespace ExerciseProject
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseMiddleware<SerilogMiddleware>();
 
             app.UseSwagger();
