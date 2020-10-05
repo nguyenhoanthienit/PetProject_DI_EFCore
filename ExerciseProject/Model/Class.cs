@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ExerciseProject.Model
 {
     public class Class
-    {asdfasdfasdf
+    {
         public int Id { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
