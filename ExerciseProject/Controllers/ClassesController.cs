@@ -12,6 +12,7 @@ using ExerciseProject.DTO;
 
 namespace ExerciseProject.Controllers
 {
+//test
     [Route("api/[controller]")]
     [ApiController]
     public class ClassesController : ControllerBase
