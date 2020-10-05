@@ -22,6 +22,7 @@ namespace ExerciseProject.Service
         }
         public IQueryable<StudentDTO> GetStudentsByClass(int classId)
         {
+            var test = "tr";
             var listStudent = _studentRepository.SelectAll().Where(s => s.Class.Id == classId);
             return listStudent.ProjectTo<StudentDTO>(_mapper.ConfigurationProvider);
         }
